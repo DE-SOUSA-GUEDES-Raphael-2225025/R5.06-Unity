@@ -25,7 +25,6 @@ public class RoomTemplates : MonoBehaviour {
 
     private void OnTriggerEnter(Collider other) {
         if (other.CompareTag("Room") && other.GetInstanceID() > GetInstanceID()) {
-            Debug.Log(gameObject.name + " collision with " + other.name);
             Destroy(gameObject);
             return;
         }

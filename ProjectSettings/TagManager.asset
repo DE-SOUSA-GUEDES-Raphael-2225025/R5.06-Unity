@@ -6,11 +6,12 @@ TagManager:
   tags:
   - Rooms
   - Room
+  - Ground
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Ground
   - Water
   - UI
   - 

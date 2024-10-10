@@ -6,6 +6,8 @@ public class RoomSpawn : MonoBehaviour {
     }
 
     [SerializeField] public RoomSide openingDirection;
+    [SerializeField] private float roomScale = 3.0f;
+
     private RoomTemplates templates;
     public bool spawned;
 
@@ -40,12 +42,11 @@ public class RoomSpawn : MonoBehaviour {
         GameObject chosenRoom = roomList[Random.Range(0, roomList.Length)];
 
         // Instancie la salle sans chevauchement
-        Instantiate(chosenRoom, new Vector3(transform.position.x - 5, 0, transform.position.z - 5), Quaternion.identity);
+        Instantiate(chosenRoom, new Vector3(transform.position.x - (5*roomScale), 0, transform.position.z - (5 * roomScale)), Quaternion.identity);
         spawned = true;
     }
 
     private void OnTriggerEnter(Collider other) {
-        Debug.Log("Collision");
 
         if (other.CompareTag("Room")) {
             Destroy(gameObject);

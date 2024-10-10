@@ -1,8 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerMovement : MonoBehaviour
-{
+public class PlayerMovement : MonoBehaviour {
     private InputAction moveAction;
     private InputAction jumpAction;
     public float moveSpeed = 5f;
@@ -10,56 +9,49 @@ public class PlayerMovement : MonoBehaviour
     private Rigidbody rb;
 
     private int jumpsRemaining = 2; // Nombre de sauts disponibles (1 saut normal + 1 double saut)
-    private bool isGrounded; // Vérifie si le joueur est au sol
+    private bool isGrounded = false; // Indique si le joueur est au sol
 
-    void OnEnable()
-    {
+    void OnEnable() {
         moveAction = GetComponent<PlayerInput>().actions.FindAction("Move", true);
         jumpAction = GetComponent<PlayerInput>().actions.FindAction("Jump", true);
         jumpAction.performed += Jump;
     }
 
-    void Start()
-    {
+    void Start() {
         rb = GetComponent<Rigidbody>();
     }
 
-    void Update()
-    {
+    void FixedUpdate() {
         Vector2 inputVector = moveAction.ReadValue<Vector2>();
         Vector3 move = new Vector3(inputVector.x, 0, inputVector.y) * moveSpeed * Time.deltaTime;
         transform.Translate(move, Space.World);
-
-        // Vérifie si le joueur est au sol et réinitialise les sauts
-        if (IsGrounded() && !isGrounded) // Si le joueur touche le sol après avoir été en l'air
-        {
-            isGrounded = true;
-            jumpsRemaining = 2; // Réinitialise les sauts uniquement lorsque le joueur touche le sol
-        }
-        else if (!IsGrounded())
-        {
-            isGrounded = false;
-        }
     }
 
-    void Jump(InputAction.CallbackContext context)
-    {
-        // Si des sauts sont disponibles et que le joueur ne saute pas trop tôt
-        if (jumpsRemaining > 0)
-        {
+    void Jump(InputAction.CallbackContext context) {
+        // Si des sauts sont disponibles
+        if (jumpsRemaining > 0) {
             rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
             jumpsRemaining--; // Diminue le nombre de sauts restants
         }
     }
 
-    bool IsGrounded()
-    {
-
-        return Physics.Raycast(transform.position, Vector3.down, 1.1f);
+    // Détection de la collision avec le sol
+    void OnCollisionEnter(Collision collision) {
+        if (collision.gameObject.CompareTag("Ground")) // Vérifie que c'est bien le sol
+        {
+            isGrounded = true;
+            jumpsRemaining = 2; // Réinitialise les sauts quand on touche le sol
+        }
     }
 
-    void OnDisable()
-    {
+    // Quand le joueur quitte le sol
+    void OnCollisionExit(Collision collision) {
+        if (collision.gameObject.CompareTag("Ground")) {
+            isGrounded = false; // Indique que le joueur n'est plus au sol
+        }
+    }
+
+    void OnDisable() {
         jumpAction.performed -= Jump;
     }
 }

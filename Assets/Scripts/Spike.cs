@@ -7,6 +7,8 @@ public class Spike : MonoBehaviour
     [SerializeField] private float upTime = 2.0f;
     [SerializeField] private float downTime = 3.0f;
     [SerializeField] private GameObject spikeModel;
+    [SerializeField] private BoxCollider boxCollider;
+
     private bool isUp = true;
     private float time = 0f;
 
@@ -20,11 +22,13 @@ public class Spike : MonoBehaviour
             isUp = false;
             time = 0;
             spikeModel.SetActive(false);
+            boxCollider.enabled = false;
         }
         if (!isUp && time > downTime) {
             isUp = true;
             time = 0;
             spikeModel.SetActive(true);
+            boxCollider.enabled = true;
         }
     }
 }
