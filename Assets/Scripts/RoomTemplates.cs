@@ -11,6 +11,7 @@ public class RoomTemplates : MonoBehaviour {
     [SerializeField] private GameObject[] rightRooms;
     [SerializeField] private  GameObject[] leftRooms;
     [SerializeField] private GameObject closedRoom;
+    
 
     public GameObject[] getTopRooms() { return topRooms; }
 
