@@ -31,6 +31,11 @@ public class PlayerHealthManager : MonoBehaviour
         healthVisual.fillAmount = (health/ baseHealth);
     }
 
+    public void OnDeath() {
+        Debug.Log("Vous etes mort");
+    }
 
-
+    public void OnTakeDamage() {
+        throw new System.NotImplementedException();
+    }
 }
