@@ -938,6 +938,10 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 7392728d-e065-47fb-b9c3-e58c94a6ceea
     m_ActionName: Movement/Look[/Mouse/delta]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: eefef45a-7ff8-4891-934a-4c42be053062
+    m_ActionName: Movement/Run[/Keyboard/leftShift]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Movement
@@ -956,8 +960,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sensivity: 15
-  walkingSpeed: 25
-  runningSpeed: 11.5
+  walkingSpeed: 10
+  runningSpeed: 20
   jumpSpeed: 8
   gravity: 20
   lookSpeed: 2
