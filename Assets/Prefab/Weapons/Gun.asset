@@ -14,5 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxAmmo: 20
   name: Basic Gun
-  currentAmmo: 14
+  currentAmmo: 20
   damage: 10
+  reloadTime: 2

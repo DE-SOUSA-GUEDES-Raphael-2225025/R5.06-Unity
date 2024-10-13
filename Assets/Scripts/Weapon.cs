@@ -9,5 +9,9 @@ public class Weapon : ScriptableObject
     public new string name;
     public int currentAmmo;
     public double damage;
+    public double reloadTime;
 
+    public void Reload() {
+        currentAmmo = maxAmmo;
+    }
 }
