@@ -121,3 +121,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawnWeapon: {fileID: 11400000, guid: 0e68a9808ad75fd46a44be5c9641e69a, type: 2}
+  ammoTracker: {fileID: 0}
+  reloadImage: {fileID: 0}

@@ -5,9 +5,17 @@ using UnityEngine;
 
 public class LookAtPlayer : MonoBehaviour
 {
-    
-    private void LateUpdate() {
-        transform.LookAt(GameObject.FindGameObjectsWithTag("Player")[0].transform);
-        transform.Rotate(0, 180, 0);
+    void LateUpdate()
+    {
+        GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
+        if (players.Length > 0)
+        {
+            transform.LookAt(players[0].transform);
+            transform.Rotate(0, 180, 0);
+        }
+        else
+        {
+            Debug.LogWarning("Aucun objet avec le tag 'Player' n'a été trouvé.");
+        }
     }
 }
