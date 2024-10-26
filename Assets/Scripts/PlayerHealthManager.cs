@@ -22,9 +22,15 @@ public class PlayerHealthManager : MonoBehaviour
         healthChangeEvent.Invoke();
     }
 
-    public void Damage(float damageValue) {
+    public void Damage(float damageValue)
+    {
         health -= damageValue;
         healthChangeEvent.Invoke();
+
+        if (health <= 0)
+        {
+            OnDeath();
+        }
     }
 
     private void UpdateVisual() {

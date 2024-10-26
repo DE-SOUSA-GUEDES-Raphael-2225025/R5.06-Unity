@@ -15,57 +15,71 @@ public class Enemy : MonoBehaviour, IDamageable
     private double health;
     private UnityEvent OnHealthChangeEvent = new UnityEvent();
 
-    private Animator animator; // Pour l'animation de mort
-    private bool isDead = false; // Empêcher les multiples exécutions de l'animation de mort
+    private Animator animator;
+    private bool isDead = false;
 
-    public void Kill()
+    void Start()
     {
-        if (!isDead)
+        health = maxHealth;
+        nameText.text = enemyName;
+
+        animator = GetComponent<Animator>();
+
+        if (animator == null)
         {
-            isDead = true;
-
-            // Vérifie si l'Animator est attaché
-            if (animator != null)
-            {
-                animator.SetBool("Death", true); // Active l'animation de mort
-            }
-            else
-            {
-                Debug.LogWarning("Animator not found on " + gameObject.name);
-            }
-
-            // Tu peux détruire l'objet après un délai si nécessaire
-            Destroy(gameObject, 2f); // 2 secondes pour laisser le temps à l'animation de jouer
+            Debug.LogWarning("Animator component missing from " + gameObject.name);
         }
+        else
+        {
+            animator.SetBool("Death", false); // Définit explicitement "Death" à false
+            Debug.Log("Valeur initiale de Death dans l'Animator après réinitialisation : " + animator.GetBool("Death"));
+        }
+
+        OnHealthChangeEvent.AddListener(UpdateHealthVisual);
     }
 
-    public void OnTakeDamage()
-    {
-        // Ici tu peux ajouter des effets ou animations de réaction aux dégâts
-    }
 
     public void Damage(double value)
     {
-        if (!isDead)
-        {
-            health -= value;
-            OnHealthChangeEvent.Invoke();
+        if (isDead) return; // Vérifie que l'ennemi est vivant avant d'infliger des dégâts
 
-            if (health <= 0)
-            {
-                Kill();
-            }
+        health -= value;
+        Debug.Log($"{enemyName} a pris {value} de dégâts, santé restante : {health}");
+        OnHealthChangeEvent.Invoke();
+
+        if (health <= 0)
+        {
+            Kill();
         }
     }
 
     public void Heal(double value)
     {
-        if (!isDead)
+        if (isDead) return;
+
+        health += value;
+        if (health > maxHealth) health = maxHealth;
+        Debug.Log($"{enemyName} a été soigné de {value}, santé actuelle : {health}");
+        OnHealthChangeEvent.Invoke();
+    }
+
+    public void Kill()
+    {
+        if (isDead) return; // Empêche plusieurs exécutions de Kill si l'ennemi est déjà mort
+
+        isDead = true;
+        Debug.Log($"{enemyName} est mort.");
+
+        if (animator != null)
         {
-            health += value;
-            if (health > maxHealth) health = maxHealth;
-            OnHealthChangeEvent.Invoke();
+            animator.SetBool("Death", true); // Définit "Death" à true pour activer l'animation de mort
         }
+        else
+        {
+            Debug.LogWarning("Animator not found on " + gameObject.name);
+        }
+
+        Destroy(gameObject, 2f); // Délai pour laisser le temps à l'animation de jouer
     }
 
     public void UpdateHealthVisual()
@@ -76,18 +90,8 @@ public class Enemy : MonoBehaviour, IDamageable
         }
     }
 
-    void Start()
+    public void OnTakeDamage()
     {
-        health = maxHealth;
-        nameText.text = enemyName;
-
-        animator = GetComponent<Animator>(); // Récupère l'Animator attaché au GameObject
-
-        if (animator == null)
-        {
-            Debug.LogWarning("Animator component missing from " + gameObject.name);
-        }
-
-        OnHealthChangeEvent.AddListener(UpdateHealthVisual); // Abonne la méthode à l'événement de changement de vie
+        // Ici tu peux ajouter des effets ou animations de réaction aux dégâts
     }
 }
