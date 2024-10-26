@@ -11,6 +11,7 @@ public class Enemy : MonoBehaviour, IDamageable
     [SerializeField] private double maxHealth;
     [SerializeField] private TMP_Text nameText;
     [SerializeField] private Image healthBar;
+    [SerializeField] private GameObject floatingTextPrefab;
 
     private double health;
     private UnityEvent OnHealthChangeEvent = new UnityEvent();
@@ -44,7 +45,9 @@ public class Enemy : MonoBehaviour, IDamageable
         if (isDead) return; // Vérifie que l'ennemi est vivant avant d'infliger des dégâts
 
         health -= value;
-        Debug.Log($"{enemyName} a pris {value} de dégâts, santé restante : {health}");
+        Vector3 randomOffset = new Vector3(Random.Range(-1.0f, 1.0f), Random.Range(0.0f, 1.0f), 0);
+        GameObject floatingText = Instantiate(floatingTextPrefab, transform.position +  new Vector3(0,3.5f,0) + randomOffset, transform.rotation);
+        floatingTextPrefab.GetComponent<TMP_Text>().text = value.ToString();
         OnHealthChangeEvent.Invoke();
 
         if (health <= 0)

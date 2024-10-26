@@ -33,55 +33,66 @@ public class PlayerMovement : MonoBehaviour
         Cursor.visible = false;
     }
 
-    void Update()
-    {
-        // Recalculer la direction de déplacement en fonction des axes
+    void Update() {
+
+        // We are grounded, so recalculate move direction based on axes
         Vector3 forward = transform.TransformDirection(Vector3.forward);
         Vector3 right = transform.TransformDirection(Vector3.right);
-
-        // Appuyer sur Shift gauche pour courir
+        // Press Left Shift to run
         bool isRunning = Input.GetKey(KeyCode.LeftShift);
-        float curSpeedX = canMove ? Input.GetAxis("Vertical") : 0;
-        float curSpeedY = canMove ? Input.GetAxis("Horizontal") : 0;
-
-        // Calcul de la vitesse de déplacement
-        float speedMultiplier = isRunning ? runningSpeed : walkingSpeed;
-
-        // Définir la direction du mouvement
-        moveDirection = (forward * curSpeedX + right * curSpeedY) * speedMultiplier;
-
-        // Sauvegarde de la composante Y du mouvement (pour la gravité et le saut)
+        float curSpeedX = canMove ? (isRunning ? runningSpeed : walkingSpeed) * Input.GetAxis("Vertical") : 0;
+        float curSpeedY = canMove ? (isRunning ? runningSpeed : walkingSpeed) * Input.GetAxis("Horizontal") : 0;
         float movementDirectionY = moveDirection.y;
+        moveDirection = (forward * curSpeedX) + (right * curSpeedY);
 
-        // Gérer les animations de déplacement
+        if (Input.GetButton("Jump") && canMove && characterController.isGrounded) {
+            moveDirection.y = jumpSpeed;
+        } else {
+            moveDirection.y = movementDirectionY;
+        }
+
+        // Apply gravity. Gravity is multiplied by deltaTime twice (once here, and once below
+        // when the moveDirection is multiplied by deltaTime). This is because gravity should be applied
+        // as an acceleration (ms^-2)
+        if (!characterController.isGrounded) {
+            moveDirection.y -= gravity * Time.deltaTime;
+        }
+
+        // Move the controller
+        characterController.Move(moveDirection * Time.deltaTime);
+
+
+        float inputX = Input.GetAxis("Mouse X") * sensivity;
+        float inputY = Input.GetAxis("Mouse Y") * sensivity;
+
+        transform.Rotate(Vector3.up, inputX * sensivity * Time.deltaTime);
+        _pitch -= inputY * sensivity * Time.deltaTime;
+        _pitch = Mathf.Clamp(_pitch, -90f, 90f);
+        transform.localEulerAngles = new Vector3(_pitch, transform.localEulerAngles.y, 0f);
+        HandleAnimation(curSpeedX, curSpeedY, isRunning);
+    }
+
+    public void HandleAnimation(float curSpeedX, float curSpeedY, bool isRunning) {
         if (curSpeedX > 0) // Avancer
         {
-            if (isRunning)
-            {
+            if (isRunning) {
                 animator.SetBool("RunForward", true);
                 animator.SetBool("WalkForward", false);
-            }
-            else
-            {
+            } else {
                 animator.SetBool("WalkForward", true);
                 animator.SetBool("RunForward", false);
             }
-        }
-        else if (curSpeedX < 0) // Reculer
-        {
-            if (isRunning)
-            {
+        } else if (curSpeedX < 0) // Reculer
+          {
+            if (isRunning) {
                 animator.SetBool("RunBackward", true);
                 animator.SetBool("WalkBackward", false);
-            }
-            else
-            {
+            } else {
                 animator.SetBool("WalkBackward", true);
                 animator.SetBool("RunBackward", false);
             }
-        }
-        else // Si pas de mouvement sur l'axe Vertical, désactiver les animations correspondantes
-        {
+        } else // Si pas de mouvement sur l'axe Vertical, désactiver les animations correspondantes
+          {
             animator.SetBool("WalkForward", false);
             animator.SetBool("RunForward", false);
             animator.SetBool("WalkBackward", false);
@@ -90,32 +101,24 @@ public class PlayerMovement : MonoBehaviour
 
         if (curSpeedY > 0) // Aller à droite
         {
-            if (isRunning)
-            {
+            if (isRunning) {
                 animator.SetBool("RunRight", true);
                 animator.SetBool("WalkRight", false);
-            }
-            else
-            {
+            } else {
                 animator.SetBool("WalkRight", true);
                 animator.SetBool("RunRight", false);
             }
-        }
-        else if (curSpeedY < 0) // Aller à gauche
-        {
-            if (isRunning)
-            {
+        } else if (curSpeedY < 0) // Aller à gauche
+          {
+            if (isRunning) {
                 animator.SetBool("RunLeft", true);
                 animator.SetBool("WalkLeft", false);
-            }
-            else
-            {
+            } else {
                 animator.SetBool("WalkLeft", true);
                 animator.SetBool("RunLeft", false);
             }
-        }
-        else // Si pas de mouvement sur l'axe Horizontal, désactiver les animations correspondantes
-        {
+        } else // Si pas de mouvement sur l'axe Horizontal, désactiver les animations correspondantes
+          {
             animator.SetBool("WalkRight", false);
             animator.SetBool("RunRight", false);
             animator.SetBool("WalkLeft", false);
@@ -123,33 +126,10 @@ public class PlayerMovement : MonoBehaviour
         }
 
         // Gérer l'animation de saut
-        if (Input.GetButton("Jump") && canMove && characterController.isGrounded)
-        {
+        if (Input.GetButton("Jump") && canMove && characterController.isGrounded) {
             // Appliquer le saut et déclencher l'animation de saut
             moveDirection.y = jumpSpeed;
             animator.SetTrigger("JumpTrigger"); // Activer le Trigger pour l'animation de saut
         }
-        else
-        {
-            moveDirection.y = movementDirectionY;
-        }
-
-        // Appliquer la gravité
-        if (!characterController.isGrounded)
-        {
-            moveDirection.y -= gravity * Time.deltaTime;
-        }
-
-        // Déplacer le contrôleur
-        characterController.Move(moveDirection * Time.deltaTime);
-
-        // Rotation de la caméra
-        float inputX = Input.GetAxis("Mouse X") * sensivity;
-        float inputY = Input.GetAxis("Mouse Y") * sensivity;
-
-        transform.Rotate(Vector3.up, inputX * sensivity * Time.deltaTime);
-        _pitch -= inputY * sensivity * Time.deltaTime;
-        _pitch = Mathf.Clamp(_pitch, -90f, 90f);
-        transform.localEulerAngles = new Vector3(_pitch, transform.localEulerAngles.y, 0f);
     }
 }
