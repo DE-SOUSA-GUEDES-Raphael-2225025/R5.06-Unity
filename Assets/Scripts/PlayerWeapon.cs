@@ -43,7 +43,6 @@ public class PlayerWeapon : MonoBehaviour
             Ray ray = Camera.main.ScreenPointToRay(new Vector3(Screen.width / 2, Screen.height / 2, 0));
 
             Debug.DrawRay(ray.origin, ray.direction * 2000, Color.red, 1f);
-
             int layerMask = LayerMask.GetMask("Enemy");
 
             if (Physics.Raycast(ray, out hit, 2000, layerMask)) {
