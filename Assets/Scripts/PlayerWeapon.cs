@@ -7,17 +7,20 @@ using UnityEngine.UI;
 
 public class PlayerWeapon : MonoBehaviour
 {
-    [SerializeField] private Weapon spawnWeapon;
+    [SerializeField] private WeaponScriptableObject spawnWeapon;
     [SerializeField] private TMP_Text ammoTracker;
     [SerializeField] private Image reloadImage;
+    [SerializeField] private Transform shootPoint;
 
-    private Weapon currentWeapon;
+    private WeaponScriptableObject currentWeapon;
     private bool reloading = false;
     private float reloadTimer = 0f;
+   
 
     private void Start() {
+        
         currentWeapon = spawnWeapon;
-        currentWeapon.currentAmmo = currentWeapon.maxAmmo;
+        currentWeapon.Reload();
         reloadImage.enabled = false;
         UpdateUI();
     }
@@ -36,30 +39,57 @@ public class PlayerWeapon : MonoBehaviour
     }
 
     private void Shoot() {
-        if (currentWeapon.currentAmmo >= 1) {
+        if (currentWeapon.GetAmmo() >= 1) {
             currentWeapon.currentAmmo--;
 
             RaycastHit hit;
             Ray ray = Camera.main.ScreenPointToRay(new Vector3(Screen.width / 2, Screen.height / 2, 0));
 
             Debug.DrawRay(ray.origin, ray.direction * 2000, Color.red, 1f);
-            int layerMask = LayerMask.GetMask("Enemy");
 
-            if (Physics.Raycast(ray, out hit, 2000, layerMask)) {
+            if (Physics.Raycast(ray, out hit, 2000)) {
+                CreateTrail(shootPoint.position, hit.point);
+
                 IDamageable enemyHit = hit.collider.GetComponentInParent<IDamageable>();
                 if (enemyHit != null) {
                     enemyHit.Damage(currentWeapon.damage);
                 }
             } else {
+                CreateTrail(shootPoint.position,shootPoint.position + ray.direction * 1000);
             }
         } else {
             Reload();
         }
     }
 
+    public void CreateTrail(Vector3 origin, Vector3 endPoint) {
+        GameObject trailObject = Instantiate(currentWeapon.trail, origin, Quaternion.identity);
+        Destroy(trailObject, 3f);
+        StartCoroutine(PlayTrail(origin, endPoint, trailObject));
+    }
+
+    public IEnumerator PlayTrail(Vector3 origin, Vector3 endPoint, GameObject instance) {
+        float distance = Vector3.Distance(origin, endPoint);
+        float remainingDistance = distance;
+
+        while (remainingDistance > 0) {
+
+            if(instance == null) { break; }
+
+            instance.transform.position = Vector3.Lerp(
+                origin, 
+                endPoint,
+                Mathf.Clamp01(1 - (remainingDistance / distance))
+            );
+            remainingDistance -= currentWeapon.trailSpeed * Time.deltaTime;
+
+            yield return null;
+        }
+    }
+
 
     private void UpdateUI() {
-        ammoTracker.text = currentWeapon.currentAmmo + " / " + currentWeapon.maxAmmo;
+        ammoTracker.text = currentWeapon.GetAmmo() + " / " + currentWeapon.GetMaxAmmo(); 
     }
 
     private void Reload() {

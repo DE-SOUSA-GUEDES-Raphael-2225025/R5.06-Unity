@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "Weapon")]
-public class Weapon : ScriptableObject
+public class WeaponScriptableObject : ScriptableObject
 {
     public int maxAmmo;
     public new string name;
@@ -11,7 +11,20 @@ public class Weapon : ScriptableObject
     public double damage;
     public double reloadTime;
 
+    public float trailSpeed;
+    public GameObject trail;
+
+
+
     public void Reload() {
         currentAmmo = maxAmmo;
+    }
+
+    public int GetAmmo() {
+        return currentAmmo;
+    }
+
+    public int GetMaxAmmo() {
+        return maxAmmo;
     }
 }

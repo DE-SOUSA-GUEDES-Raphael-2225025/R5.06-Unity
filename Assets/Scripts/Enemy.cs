@@ -54,11 +54,13 @@ public class Enemy : MonoBehaviour, IDamageable
         Vector3 randomOffset = new Vector3(Random.Range(-1.0f, 1.0f), Random.Range(0.0f, 1.0f), 0);
         GameObject floatingText = Instantiate(floatingTextPrefab, transform.position + new Vector3(0, 3.5f, 0) + randomOffset, transform.rotation);
         floatingText.GetComponent<TMP_Text>().text = value.ToString();
+        Destroy(floatingText, 2);
 
         // Instancie les particules de dégâts
         if (damageParticleEffect != null)
         {
-            Instantiate(damageParticleEffect, transform.position + randomOffset, Quaternion.identity);
+            GameObject damageParticle = Instantiate(damageParticleEffect, transform.position + randomOffset, Quaternion.identity);
+            Destroy(damageParticle, 2);
         }
 
         OnHealthChangeEvent.Invoke();

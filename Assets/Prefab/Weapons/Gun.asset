@@ -14,6 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxAmmo: 20
   name: Basic Gun
-  currentAmmo: 20
+  currentAmmo: 2
   damage: 10
   reloadTime: 2
+  trailSpeed: 100
+  trail: {fileID: 5889796257054918637, guid: da71cb6a456eae84e9ff7dcf1eb8f785, type: 3}
