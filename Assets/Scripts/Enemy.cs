@@ -11,10 +11,12 @@ public class Enemy : MonoBehaviour, IDamageable
     [SerializeField] private double maxHealth;
     [SerializeField] private TMP_Text nameText;
     [SerializeField] private Image healthBar;
+    [SerializeField] private Image damageBar;
     [SerializeField] private GameObject floatingTextPrefab;
 
     private double health;
     private UnityEvent OnHealthChangeEvent = new UnityEvent();
+    private float timeWithoutDamage = 0f;
 
     private Animator animator;
     private bool isDead = false;
@@ -45,6 +47,7 @@ public class Enemy : MonoBehaviour, IDamageable
         if (isDead) return; // Vérifie que l'ennemi est vivant avant d'infliger des dégâts
 
         health -= value;
+        timeWithoutDamage = 0;
         Vector3 randomOffset = new Vector3(Random.Range(-1.0f, 1.0f), Random.Range(0.0f, 1.0f), 0);
         GameObject floatingText = Instantiate(floatingTextPrefab, transform.position +  new Vector3(0,3.5f,0) + randomOffset, transform.rotation);
         floatingTextPrefab.GetComponent<TMP_Text>().text = value.ToString();
@@ -87,9 +90,18 @@ public class Enemy : MonoBehaviour, IDamageable
 
     public void UpdateHealthVisual()
     {
+        
         if (healthBar != null)
         {
             healthBar.fillAmount = (float)(health / maxHealth);
+        }
+    }
+
+    public void Update() {
+        if (timeWithoutDamage < 1) timeWithoutDamage += Time.deltaTime;
+
+        if (damageBar.fillAmount > healthBar.fillAmount && timeWithoutDamage >= 1) {
+            damageBar.fillAmount -= 0.01f;
         }
     }
 

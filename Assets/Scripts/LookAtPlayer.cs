@@ -12,6 +12,12 @@ public class LookAtPlayer : MonoBehaviour
         {
             transform.LookAt(players[0].transform);
             transform.Rotate(0, 180, 0);
+            transform.rotation = new Quaternion(
+                0f,
+                transform.rotation.y,
+                0f,
+                transform.rotation.w
+                );
         }
         else
         {
