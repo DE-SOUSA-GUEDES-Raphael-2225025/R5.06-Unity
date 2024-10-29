@@ -47,12 +47,10 @@ public class Enemy : MonoBehaviour, IDamageable
         if (isDead) return; // Vérifie que l'ennemi est vivant avant d'infliger des dégâts
 
         health -= value;
-<<<<<<< HEAD
 
         // Affiche le texte flottant des dégâts
-=======
+
         timeWithoutDamage = 0;
->>>>>>> 551040b6ee8b6851e94767014265c7a817b4920b
         Vector3 randomOffset = new Vector3(Random.Range(-1.0f, 1.0f), Random.Range(0.0f, 1.0f), 0);
         GameObject floatingText = Instantiate(floatingTextPrefab, transform.position + new Vector3(0, 3.5f, 0) + randomOffset, transform.rotation);
         floatingText.GetComponent<TMP_Text>().text = value.ToString();
