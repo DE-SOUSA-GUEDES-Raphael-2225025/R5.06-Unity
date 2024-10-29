@@ -174,6 +174,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8702747923846004457, guid: 09916802a18d38843a5e2905f11e5a74, type: 3}
+      propertyPath: damageParticleEffect
+      value: 
+      objectReference: {fileID: 8466550097999262125, guid: 89be2b93542091740aca2bb11884f1a9, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -655,6 +659,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8702747923846004457, guid: 09916802a18d38843a5e2905f11e5a74, type: 3}
+      propertyPath: damageParticleEffect
+      value: 
+      objectReference: {fileID: 8466550097999262125, guid: 89be2b93542091740aca2bb11884f1a9, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -954,6 +962,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8702747923846004457, guid: 09916802a18d38843a5e2905f11e5a74, type: 3}
+      propertyPath: damageParticleEffect
+      value: 
+      objectReference: {fileID: 8466550097999262125, guid: 89be2b93542091740aca2bb11884f1a9, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1696,7 +1708,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1101432069160031015, guid: fc94c25f21ce9e942bbbf13235411486, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -1.61
       objectReference: {fileID: 0}
     - target: {fileID: 1101432069160031015, guid: fc94c25f21ce9e942bbbf13235411486, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
