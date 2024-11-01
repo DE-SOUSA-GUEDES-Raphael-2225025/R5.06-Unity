@@ -11,15 +11,21 @@ public class PlayerWeapon : MonoBehaviour
     [SerializeField] private TMP_Text ammoTracker;
     [SerializeField] private Image reloadImage;
     [SerializeField] private Transform shootPoint;
+    [SerializeField] private Transform weaponPosition;
+    [SerializeField] private AudioClip gunShotSound;
+    [SerializeField] private AudioClip hitSound;
+
 
     private WeaponScriptableObject currentWeapon;
     private bool reloading = false;
     private float reloadTimer = 0f;
+    private GameObject currentWeaponModel;
    
 
     private void Start() {
         
         currentWeapon = spawnWeapon;
+        UpdateWeaponModel();
         currentWeapon.Reload();
         reloadImage.enabled = false;
         UpdateUI();
@@ -41,6 +47,7 @@ public class PlayerWeapon : MonoBehaviour
     private void Shoot() {
         if (currentWeapon.GetAmmo() >= 1) {
             currentWeapon.currentAmmo--;
+            AudioSource.PlayClipAtPoint(gunShotSound, shootPoint.position);
 
             RaycastHit hit;
             Ray ray = Camera.main.ScreenPointToRay(new Vector3(Screen.width / 2, Screen.height / 2, 0));
@@ -52,6 +59,7 @@ public class PlayerWeapon : MonoBehaviour
 
                 IDamageable enemyHit = hit.collider.GetComponentInParent<IDamageable>();
                 if (enemyHit != null) {
+                    AudioSource.PlayClipAtPoint(hitSound, shootPoint.position, 1f);
                     enemyHit.Damage(currentWeapon.damage);
                 }
             } else {
@@ -110,5 +118,10 @@ public class PlayerWeapon : MonoBehaviour
             reloadTimer = 0;
             UpdateUI();
         }
+    }
+
+    private void UpdateWeaponModel() {
+        if(currentWeaponModel) Destroy(currentWeaponModel);
+        currentWeaponModel = Instantiate(currentWeapon.gunModel, weaponPosition);
     }
 }

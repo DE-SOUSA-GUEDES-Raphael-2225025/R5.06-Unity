@@ -13,6 +13,7 @@ public class WeaponScriptableObject : ScriptableObject
 
     public float trailSpeed;
     public GameObject trail;
+    public GameObject gunModel;
 
 
 
