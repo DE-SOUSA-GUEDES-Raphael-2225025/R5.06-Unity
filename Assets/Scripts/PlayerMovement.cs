@@ -71,60 +71,120 @@ public class PlayerMovement : MonoBehaviour
         transform.localEulerAngles = new Vector3(_pitch, transform.localEulerAngles.y, 0f);
         HandleAnimation(curSpeedX, curSpeedY, isRunning);
     }
+    void Teleport(Vector3 destination)
+    {
+        canMove = false;
+        animator.SetTrigger("TeleportTrigger");
+        characterController.enabled = false;
 
-    public void HandleAnimation(float curSpeedX, float curSpeedY, bool isRunning) {
+        // Ajouter un décalage vers le haut
+        transform.position = destination + Vector3.up * 2.5f;
+
+        characterController.enabled = true;
+        canMove = true;
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        Debug.Log("Collision détectée avec : " + other.name);
+
+        // Vérifie si l'objet entrant a un tag spécifique pour le téléporteur
+        if (other.CompareTag("Teleporteur"))
+        {
+            Debug.Log("Téléportation en cours...");
+
+            // Récupère la destination associée au téléporteur
+            Teleporter teleporter = other.GetComponent<Teleporter>();
+            if (teleporter != null && teleporter.destination != null)
+            {
+                Teleport(teleporter.destination.position);
+            }
+            else
+            {
+                Debug.LogWarning("Destination non définie pour ce téléporteur.");
+            }
+        }
+    }
+
+
+    public void HandleAnimation(float curSpeedX, float curSpeedY, bool isRunning)
+    {
+        if (!canMove) return; // Ignore les animations si le joueur est en téléportation
+
         if (curSpeedX > 0) // Avancer
         {
-            if (isRunning) {
+            if (isRunning)
+            {
                 animator.SetBool("RunForward", true);
                 animator.SetBool("WalkForward", false);
-            } else {
+            }
+            else
+            {
                 animator.SetBool("WalkForward", true);
                 animator.SetBool("RunForward", false);
             }
-        } else if (curSpeedX < 0) // Reculer
-          {
-            if (isRunning) {
+        }
+        else if (curSpeedX < 0) // Reculer
+        {
+            if (isRunning)
+            {
                 animator.SetBool("RunBackward", true);
                 animator.SetBool("WalkBackward", false);
-            } else {
+            }
+            else
+            {
                 animator.SetBool("WalkBackward", true);
                 animator.SetBool("RunBackward", false);
             }
-        } else // Si pas de mouvement sur l'axe Vertical, désactiver les animations correspondantes
-          {
+        }
+        else // Pas de mouvement
+        {
             animator.SetBool("WalkForward", false);
             animator.SetBool("RunForward", false);
             animator.SetBool("WalkBackward", false);
             animator.SetBool("RunBackward", false);
         }
 
-        if (curSpeedY > 0) // Aller à droite
+        if (curSpeedY > 0) // Droite
         {
-            if (isRunning) {
+            if (isRunning)
+            {
                 animator.SetBool("RunRight", true);
                 animator.SetBool("WalkRight", false);
-            } else {
+            }
+            else
+            {
                 animator.SetBool("WalkRight", true);
                 animator.SetBool("RunRight", false);
             }
-        } else if (curSpeedY < 0) // Aller à gauche
-          {
-            if (isRunning) {
+        }
+        else if (curSpeedY < 0) // Gauche
+        {
+            if (isRunning)
+            {
                 animator.SetBool("RunLeft", true);
                 animator.SetBool("WalkLeft", false);
-            } else {
+            }
+            else
+            {
                 animator.SetBool("WalkLeft", true);
                 animator.SetBool("RunLeft", false);
             }
-        } else // Si pas de mouvement sur l'axe Horizontal, désactiver les animations correspondantes
-          {
+        }
+        else // Pas de mouvement horizontal
+        {
             animator.SetBool("WalkRight", false);
             animator.SetBool("RunRight", false);
             animator.SetBool("WalkLeft", false);
             animator.SetBool("RunLeft", false);
         }
 
+        // Animation de saut
+        if (Input.GetButton("Jump") && canMove && characterController.isGrounded)
+        {
+            animator.SetTrigger("JumpTrigger");
+        }
+    
         // Gérer l'animation de saut
         if (Input.GetButton("Jump") && canMove && characterController.isGrounded) {
             // Appliquer le saut et déclencher l'animation de saut
