@@ -4,7 +4,7 @@ using UnityEngine;
 public class DeathZone : MonoBehaviour
 {
     public Transform respawnPoint; // Point de réapparition
-    public float respawnDelay = 0.5f; // Temps avant le respawn
+    public float respawnDelay = 2.0f; // Temps avant le respawn
     private bool isRespawning = false; // Empêche plusieurs morts simultanées
 
     private void OnTriggerEnter(Collider other)
@@ -13,7 +13,7 @@ public class DeathZone : MonoBehaviour
         {
             isRespawning = true;
 
-            // Déclenche immédiatement l'animation de mort
+            // Déclenche l'animation de mort
             Animator animator = other.GetComponent<Animator>();
             if (animator != null)
             {
@@ -21,14 +21,26 @@ public class DeathZone : MonoBehaviour
                 Debug.Log("Animation de mort déclenchée.");
             }
 
-            // Lance le respawn après un délai
+            // Affiche l'écran de mort
+            DeathUIManager deathUI = FindObjectOfType<DeathUIManager>();
+            if (deathUI != null)
+            {
+                Debug.Log("Affichage de l'écran de mort.");
+                deathUI.ShowDeathScreen();
+            }
+            else
+            {
+                Debug.LogError("DeathUIManager introuvable !");
+            }
+
+            // Lance la coroutine pour respawn après un délai
             StartCoroutine(RespawnPlayer(other));
         }
     }
 
     private IEnumerator RespawnPlayer(Collider player)
     {
-        yield return new WaitForSeconds(respawnDelay); // Attends la fin de l'animation
+        yield return new WaitForSeconds(respawnDelay); // Attends le délai
 
         // Désactiver temporairement le CharacterController
         CharacterController controller = player.GetComponent<CharacterController>();
@@ -41,20 +53,28 @@ public class DeathZone : MonoBehaviour
         Animator animator = player.GetComponent<Animator>();
         if (animator != null)
         {
-            animator.ResetTrigger("DeathTrigger"); // Réinitialise le trigger
+            animator.ResetTrigger("DeathTrigger");
             animator.Play("Idle"); // Force le retour à l'état Idle
         }
 
         // Téléporte le joueur
         player.transform.position = respawnPoint.position;
 
-        // Réactiver le CharacterController
+        // Réactive le CharacterController
         if (controller != null)
         {
             controller.enabled = true;
         }
 
         Debug.Log("Le joueur a été téléporté au point de respawn.");
+
+        // Cache l'écran de mort après le respawn
+        DeathUIManager deathUI = FindObjectOfType<DeathUIManager>();
+        if (deathUI != null)
+        {
+            deathUI.HideDeathScreen();
+        }
+
         isRespawning = false;
     }
 }
