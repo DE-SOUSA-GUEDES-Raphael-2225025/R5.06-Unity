@@ -465,11 +465,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1215954336}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &310888196 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3352480248246901524, guid: 5bfff92e4bc94494f8f2eab2de8edc21, type: 3}
-  m_PrefabInstance: {fileID: 72329558}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &388436801
 GameObject:
   m_ObjectHideFlags: 0
@@ -931,8 +926,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lootTable:
-  - itemPrefab: {fileID: 310888196}
-    minCount: 1
+  - itemPrefab: {fileID: 3352480248246901524, guid: 5bfff92e4bc94494f8f2eab2de8edc21, type: 3}
+    minCount: 3
     maxCount: 5
     dropChance: 1
 --- !u!1 &551429620
@@ -1677,6 +1672,17 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 875365546}
   m_CullTransparentMesh: 1
+--- !u!114 &944713753 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 901075579779773530, guid: f3ab9ab861ddb2c41994481057dbf150, type: 3}
+  m_PrefabInstance: {fileID: 1129119321}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86d79052152ddd04ab80b5f318d64b15, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1044963163
 GameObject:
   m_ObjectHideFlags: 0
@@ -1994,6 +2000,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 901075579779773530, guid: f3ab9ab861ddb2c41994481057dbf150, type: 3}
+      propertyPath: keyCount
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 901075579779773530, guid: f3ab9ab861ddb2c41994481057dbf150, type: 3}
+      propertyPath: coinCount
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1269685667745403423, guid: f3ab9ab861ddb2c41994481057dbf150, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.51640797
@@ -2061,8 +2075,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lootTable:
-  - itemPrefab: {fileID: 310888196}
-    minCount: 1
+  - itemPrefab: {fileID: 3352480248246901524, guid: 5bfff92e4bc94494f8f2eab2de8edc21, type: 3}
+    minCount: 3
     maxCount: 5
     dropChance: 1
 --- !u!4 &1215954336 stripped
@@ -2217,10 +2231,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lootTable:
-  - itemPrefab: {fileID: 310888196}
-    minCount: 1
+  - itemPrefab: {fileID: 3352480248246901524, guid: 5bfff92e4bc94494f8f2eab2de8edc21, type: 3}
+    minCount: 3
     maxCount: 5
-    dropChance: 0
+    dropChance: 1
 --- !u!1 &1376347772
 GameObject:
   m_ObjectHideFlags: 0
@@ -2551,8 +2565,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -50, y: 30}
-  m_SizeDelta: {x: 200, y: 50}
+  m_AnchoredPosition: {x: -124, y: 67.697}
+  m_SizeDelta: {x: 317.7858, y: 135.3947}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1711408812
 MonoBehaviour:
@@ -2576,8 +2590,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: XX / XX
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: a71fbf63a08c08846966306057835891, type: 2}
+  m_sharedMaterial: {fileID: 8118322968862302487, guid: a71fbf63a08c08846966306057835891, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -2601,8 +2615,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36
-  m_fontSizeBase: 36
+  m_fontSize: 60
+  m_fontSizeBase: 60
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -3442,7 +3456,7 @@ PrefabInstance:
     - target: {fileID: 4247155664104950801, guid: 59717a2aff058e14486740fe59babc8d, type: 3}
       propertyPath: gameManager
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 944713753}
     - target: {fileID: 4247155664104950801, guid: 59717a2aff058e14486740fe59babc8d, type: 3}
       propertyPath: keyCountText
       value: 
