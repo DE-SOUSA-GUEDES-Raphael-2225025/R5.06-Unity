@@ -1,7 +1,7 @@
 fileFormatVersion: 2
-guid: 00df44b0c2b8d0141a1f34b33e98d47c
+guid: 3f3d651f38b54ef4abbe402ed0a73127
 ModelImporter:
-  serializedVersion: 21202
+  serializedVersion: 22200
   internalIDToNameTable:
   - first:
       1: 100000
@@ -539,7 +539,7 @@ ModelImporter:
     second: upperarm_twist_01_r
   - first:
       74: 7400000
-    second: Gunslinger_8Way_Run_FR
+    second: Gunslinger_Equip_Idle
   - first:
       95: 9500000
     second: //RootNode
@@ -559,25 +559,14 @@ ModelImporter:
     rigImportErrors: 
     rigImportWarnings: "Copied Avatar Rig Configuration mis-match. Bone length in
       copied configuration does not match position in animation file:\n\t'thigh_l'
-      : position error = 2.559032 mm\n\t'thigh_r' : position error = 2.094034 mm\n\t'calf_r'
-      : position error = 2.241335 mm\n\t'spine_01' : position error = 3.982687 mm\n\t'hand_l'
-      : position error = 1.019683 mm\n\t'lowerarm_r' : position error = 1.891306
-      mm\n\t'hand_r' : position error = 7.868501 mm\n\t'middle_02_r' : position error
-      = 1.203910 mm\n\t'ring_02_r' : position error = 1.314833 mm\n"
+      : position error = 1.578528 mm\n\t'thigh_r' : position error = 1.950486 mm\n\t'hand_l'
+      : position error = 2.394940 mm\n\t'hand_r' : position error = 2.300585 mm\n\t'middle_02_r'
+      : position error = 1.204009 mm\n\t'ring_02_r' : position error = 1.314686 mm\n"
     animationImportErrors: 
     animationImportWarnings: "\nClip 'Take 001' has import animation warnings that
       might lower retargeting quality:\nNote: Activate translation DOF on avatar
-      to improve retargeting quality.\n\t'thigh_l' has translation animation that
-      will be discarded.\n\t'calf_l' has translation animation that will be discarded.\n\t'foot_l'
-      has translation animation that will be discarded.\n\t'ball_l' has translation
-      animation that will be discarded.\n\t'thigh_r' has translation animation that
-      will be discarded.\n\t'calf_r' has translation animation that will be discarded.\n\t'foot_r'
-      has translation animation that will be discarded.\n\t'ball_r' has translation
-      animation that will be discarded.\n\t'spine_01' has translation animation that
-      will be discarded.\n\t'upperarm_l' has translation animation that will be discarded.\n\t'lowerarm_l'
-      has translation animation that will be discarded.\n\t'hand_l' has translation
-      animation that will be discarded.\n\t'upperarm_r' has translation animation
-      that will be discarded.\n"
+      to improve retargeting quality.\n\t'lowerarm_l' has translation animation that
+      will be discarded.\n\t'hand_l' has translation animation that will be discarded.\n"
     animationRetargetingWarnings: 
     animationDoRetargetingWarnings: 0
     importAnimatedCustomProperties: 0
@@ -591,18 +580,18 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: Gunslinger_8Way_Run_FR
+      name: Gunslinger_Equip_Idle
       takeName: Take 001
       internalID: 0
       firstFrame: 0
-      lastFrame: 40
+      lastFrame: 300
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
       cycleOffset: 0
       loop: 0
       hasAdditiveReferencePose: 0
-      loopTime: 0
+      loopTime: 1
       loopBlend: 0
       loopBlendOrientation: 0
       loopBlendPositionY: 0
@@ -819,6 +808,7 @@ ModelImporter:
     addColliders: 0
     useSRGBMaterialColor: 1
     sortHierarchyByName: 1
+    importPhysicalCameras: 1
     importVisibility: 1
     importBlendShapes: 1
     importCameras: 1
@@ -846,6 +836,7 @@ ModelImporter:
     secondaryUVMinObjectScale: 1
     secondaryUVPackMargin: 4
     useFileScale: 1
+    strictVertexDataChecks: 0
   tangentSpace:
     normalSmoothAngle: 60
     normalImportMode: 0
@@ -1354,8 +1345,7 @@ ModelImporter:
     - name: ik_hand_r
       parentName: ik_hand_gun
       position: {x: -0, y: 0, z: -0.000000019073486}
-      rotation: {x: 0.000000014901159, y: -0.000000022351744, z: 0.000000014901163,
-        w: 1}
+      rotation: {x: 0.000000014901159, y: -0.000000022351744, z: 0.000000014901163, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: M82_Root
       parentName: ik_hand_r
@@ -1460,8 +1450,7 @@ ModelImporter:
     - name: lowerarm_twist_01_l
       parentName: lowerarm_l
       position: {x: -0.14000021, y: 0.000000019073486, z: 0.00000015258789}
-      rotation: {x: 0.000000014901161, y: -0.000000014901161, z: 0.000000014901161,
-        w: 1}
+      rotation: {x: 0.000000014901161, y: -0.000000014901161, z: 0.000000014901161, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: hand_l
       parentName: lowerarm_l
@@ -1741,8 +1730,7 @@ ModelImporter:
     - name: FX_Gunshot_Light
       parentName: FX_Gunfire_Bone
       position: {x: 0.12306832, y: 0.00000008106232, z: 0.00000030457971}
-      rotation: {x: -0.0000000037252903, y: 3.4924638e-10, z: 0.0000000033020204,
-        w: 1}
+      rotation: {x: -0.0000000037252903, y: 3.4924638e-10, z: 0.0000000033020204, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: ShotGun
       parentName: Frank_Gunslinger_Skin(Clone)
@@ -1771,13 +1759,14 @@ ModelImporter:
     hasTranslationDoF: 0
     hasExtraRoot: 1
     skeletonHasParents: 1
-  lastHumanDescriptionAvatarSource: {fileID: 9000000, guid: 4c89d8affd612674b9c238ff8651667e,
-    type: 3}
+  lastHumanDescriptionAvatarSource: {fileID: 9000000, guid: 4c89d8affd612674b9c238ff8651667e, type: 3}
   autoGenerateAvatarMappingIfUnspecified: 1
   animationType: 3
   humanoidOversampling: 1
   avatarSetup: 2
   addHumanoidExtraRootOnlyWhenUsingAvatar: 0
+  importBlendShapeDeformPercent: 0
+  remapMaterialsIfMaterialImportModeIsNone: 1
   additionalBone: 0
   userData: 
   assetBundleName: 

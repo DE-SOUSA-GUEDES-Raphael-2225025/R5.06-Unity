@@ -4,17 +4,19 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
 
-public class PlayerHealthManager : MonoBehaviour
+public class PlayerManager : MonoBehaviour
 {
     [SerializeField] private float baseHealth = 20.0f;
     [SerializeField] private Image healthVisual;
     private float health;
+    private int coins { get; set; }
+    private int keys { get; set; }
+
     private UnityEvent healthChangeEvent = new UnityEvent();
 
     private void Start() {
         health = baseHealth;
         healthChangeEvent.AddListener(UpdateVisual);
-        
     }
 
     public void Heal(float healValue) {
@@ -43,5 +45,12 @@ public class PlayerHealthManager : MonoBehaviour
 
     public void OnTakeDamage() {
         throw new System.NotImplementedException();
+    }
+
+    private void OnTriggerEnter(Collider other) {
+        if (other.GetComponent<Collectable>() != null) {
+            other.GetComponent<Collectable>().Collect();
+            Destroy(other.gameObject);
+        }
     }
 }

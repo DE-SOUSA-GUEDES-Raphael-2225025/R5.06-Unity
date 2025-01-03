@@ -83,10 +83,14 @@ public class Enemy : MonoBehaviour, IDamageable
 
     public void Kill()
     {
-        if (isDead) return; // Empêche plusieurs exécutions de Kill si l'ennemi est déjà mort
+        if (isDead) return; 
 
         isDead = true;
         Debug.Log($"{enemyName} est mort.");
+
+        if (GetComponent<LootDrop>() != null) {
+            GetComponent<LootDrop>().Drop();
+        }
 
         if (animator != null)
         {

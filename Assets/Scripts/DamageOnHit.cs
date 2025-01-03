@@ -14,10 +14,10 @@ public class DamageOnHit : MonoBehaviour
     }
 
     private void OnTriggerEnter(Collider other) {
-        if(other.GetComponent<PlayerHealthManager>() != null) {
+        if(other.GetComponent<PlayerManager>() != null) {
             if (delay > 0) return;
 
-            PlayerHealthManager playerHealthManager = other.GetComponent<PlayerHealthManager>();
+            PlayerManager playerHealthManager = other.GetComponent<PlayerManager>();
             playerHealthManager.Damage(damageOnHitValue);
             delay = noDamageDelay;
 

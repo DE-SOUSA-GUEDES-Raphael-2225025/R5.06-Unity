@@ -31,11 +31,15 @@ public class PlayerWeapon : MonoBehaviour
         UpdateUI();
     }
 
-    private void Update() {
+    private void LateUpdate() {
         if (Input.GetKeyDown(KeyCode.Mouse0)) {
             Shoot();
             UpdateUI();
         }
+    }
+
+    private void Update() {
+        
 
         if(Input.GetKeyDown(KeyCode.R)) {
             Reload();
@@ -50,6 +54,7 @@ public class PlayerWeapon : MonoBehaviour
             AudioSource.PlayClipAtPoint(gunShotSound, shootPoint.position);
 
             RaycastHit hit;
+            Debug.Log(Camera.main);
             Ray ray = Camera.main.ScreenPointToRay(new Vector3(Screen.width / 2, Screen.height / 2, 0));
 
             Debug.DrawRay(ray.origin, ray.direction * 2000, Color.red, 1f);

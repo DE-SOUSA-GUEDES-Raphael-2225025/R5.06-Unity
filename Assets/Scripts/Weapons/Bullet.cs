@@ -12,7 +12,7 @@ public class Bullet : MonoBehaviour
     }
 
     private void OnCollisionEnter(Collision collision) {
-        if(collision.collider.GetComponent<PlayerHealthManager>() != null) {
+        if(collision.collider.GetComponent<PlayerManager>() != null) {
 
         } else {
             Debug.Log("Collision with " + collision.collider.name);

@@ -9,7 +9,7 @@ public class EnemyDetectPlayer : MonoBehaviour
 
 
     private void OnTriggerEnter(Collider other) {
-        if (other.GetComponent<PlayerHealthManager>() == null) return;
+        if (other.GetComponent<PlayerManager>() == null) return;
 
         focusPlayer = other.gameObject;
     }
