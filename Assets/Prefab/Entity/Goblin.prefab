@@ -81,15 +81,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7892466275472862510, guid: 09916802a18d38843a5e2905f11e5a74, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 17.21671
+      value: 6.834994
       objectReference: {fileID: 0}
     - target: {fileID: 7892466275472862510, guid: 09916802a18d38843a5e2905f11e5a74, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 0.00000047683716
       objectReference: {fileID: 0}
     - target: {fileID: 7892466275472862510, guid: 09916802a18d38843a5e2905f11e5a74, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 16.775028
+      value: 3.7624521
       objectReference: {fileID: 0}
     - target: {fileID: 7892466275472862510, guid: 09916802a18d38843a5e2905f11e5a74, type: 3}
       propertyPath: m_LocalRotation.w
@@ -137,6 +137,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 1083057453657798146, guid: 09916802a18d38843a5e2905f11e5a74, type: 3}
       insertIndex: -1
       addedObject: {fileID: 6629730790309041448}
+    - targetCorrespondingSourceObject: {fileID: 1083057453657798146, guid: 09916802a18d38843a5e2905f11e5a74, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5585104275899625854}
   m_SourcePrefab: {fileID: 100100000, guid: 09916802a18d38843a5e2905f11e5a74, type: 3}
 --- !u!1 &1888585262701631165 stripped
 GameObject:
@@ -176,6 +179,23 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1.2619133, y: 2.4194546, z: 1}
   m_Center: {x: 0.005290985, y: 1.0689466, z: 0}
+--- !u!114 &5585104275899625854
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1888585262701631165}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ea5cacc4b8b87245a815e97b6b3762f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lootTable:
+  - itemPrefab: {fileID: 3352480248246901524, guid: 5bfff92e4bc94494f8f2eab2de8edc21, type: 3}
+    minCount: 3
+    maxCount: 5
+    dropChance: 1
 --- !u!4 &8698136486212373905 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7892466275472862510, guid: 09916802a18d38843a5e2905f11e5a74, type: 3}

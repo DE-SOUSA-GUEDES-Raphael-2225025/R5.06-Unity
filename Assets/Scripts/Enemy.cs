@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.Events;
 using UnityEngine.UI;
 
@@ -14,7 +15,9 @@ public class Enemy : MonoBehaviour, IDamageable
     [SerializeField] private Image damageBar;
     [SerializeField] private GameObject floatingTextPrefab;
     [SerializeField] private GameObject damageParticleEffect; // Système de particules pour les dégâts
-
+    [SerializeField] private Transform player;
+    
+    private NavMeshAgent agent;
     private double health;
     private UnityEvent OnHealthChangeEvent = new UnityEvent();
     private float timeWithoutDamage = 0f;
@@ -26,6 +29,7 @@ public class Enemy : MonoBehaviour, IDamageable
     {
         health = maxHealth;
         nameText.text = enemyName;
+        agent = GetComponent<NavMeshAgent>();
 
         animator = GetComponent<Animator>();
 
@@ -119,6 +123,8 @@ public class Enemy : MonoBehaviour, IDamageable
         if (damageBar.fillAmount > healthBar.fillAmount && timeWithoutDamage >= 1) {
             damageBar.fillAmount -= 0.01f;
         }
+
+        agent.destination = player.position;
     }
 
     public void OnTakeDamage()
