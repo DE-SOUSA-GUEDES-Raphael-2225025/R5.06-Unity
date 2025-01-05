@@ -18,7 +18,7 @@ public class SC_MainMenu : MonoBehaviour
     public void PlayNowButton()
     {
         Debug.Log("PlayNow button clicked.");
-        UnityEngine.SceneManagement.SceneManager.LoadScene("MainScene");
+        UnityEngine.SceneManagement.SceneManager.LoadScene("TestScene");
     }
     public void MainMenuButton()
     {

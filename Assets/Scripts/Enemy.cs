@@ -16,22 +16,37 @@ public class Enemy : MonoBehaviour, IDamageable
     [SerializeField] private GameObject floatingTextPrefab;
     [SerializeField] private GameObject damageParticleEffect; // Système de particules pour les dégâts
     [SerializeField] private Transform player;
-    
+    [SerializeField] private float delayBetweenAttack = 4.0f;
+    [SerializeField] private GameObject damageZone;
+    [SerializeField] private Animator animator;
+
+    private float lastAttackDelay = 0f;
     private NavMeshAgent agent;
     private double health;
     private UnityEvent OnHealthChangeEvent = new UnityEvent();
     private float timeWithoutDamage = 0f;
+    private bool isAttacking = false;
 
-    private Animator animator;
     private bool isDead = false;
 
-    void Start()
+    void Start() {
+        if (animator != null) {
+            animator.SetBool("Death", false);
+            animator.Rebind();
+            animator.Update(0); // Met à jour l'Animator immédiatement
+        }
+    }
+
+
+    void Awake()
     {
         health = maxHealth;
         nameText.text = enemyName;
         agent = GetComponent<NavMeshAgent>();
+        player = GameObject.FindWithTag("Player").transform;
 
         animator = GetComponent<Animator>();
+        animator.Rebind();
 
         if (animator == null)
         {
@@ -90,20 +105,18 @@ public class Enemy : MonoBehaviour, IDamageable
         if (isDead) return; 
 
         isDead = true;
-        Debug.Log($"{enemyName} est mort.");
+        
+        if(agent != null) {
+            agent.Stop();
+        }
 
         if (GetComponent<LootDrop>() != null) {
             GetComponent<LootDrop>().Drop();
         }
 
-        if (animator != null)
-        {
-            animator.SetBool("Death", true); // Définit "Death" à true pour activer l'animation de mort
-        }
-        else
-        {
-            Debug.LogWarning("Animator not found on " + gameObject.name);
-        }
+        Debug.Log("Joue l'animation de mort");
+        animator.SetBool("Death", true); // Définit "Death" à true pour activer l'animation de mort
+        
 
         Destroy(gameObject, 2f); // Délai pour laisser le temps à l'animation de jouer
     }
@@ -124,11 +137,33 @@ public class Enemy : MonoBehaviour, IDamageable
             damageBar.fillAmount -= 0.01f;
         }
 
-        agent.destination = player.position;
+        if (agent != null) {
+            agent.destination = player.position;
+        }
+        
+        if(lastAttackDelay > 0) {
+            lastAttackDelay -= Time.deltaTime;
+        }
+
+        if(Vector3.Distance(transform.position, player.position) < 4 && lastAttackDelay <= 0) {
+            StartCoroutine(Attack());
+            lastAttackDelay = delayBetweenAttack;
+        }
     }
 
     public void OnTakeDamage()
     {
         // Ici tu peux ajouter des effets ou animations de réaction aux dégâts
     }
+
+    public IEnumerator Attack() {
+
+        animator.SetTrigger("Attack");
+        yield return new WaitForSeconds(1f);
+        damageZone.SetActive(true);
+        yield return new WaitForSeconds(1f);
+        damageZone.SetActive(false);
+        yield return null;
+    }
+
 }

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Cinemachine;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
@@ -40,6 +41,9 @@ public class PlayerMovement : MonoBehaviour
     }
 
     void Update() {
+
+        if (GameManager.instance.IsGameEnded()) return; // La partie est finie
+
         PlayerAim();
         Vector3 forward = transform.TransformDirection(Vector3.forward);
         Vector3 right = transform.TransformDirection(Vector3.right);
@@ -57,7 +61,10 @@ public class PlayerMovement : MonoBehaviour
             moveDirection.y = movementDirectionY;
         }
 
-        
+        if (Input.GetKeyDown(KeyCode.E)) {
+            TryInterract();
+        }
+
         if (!characterController.isGrounded) {
             moveDirection.y -= gravity * Time.deltaTime;
         }
@@ -83,5 +90,16 @@ public class PlayerMovement : MonoBehaviour
             aimingCamera.gameObject.SetActive(false);
             sensivity = runningSensitivity;
         }
+    }
+
+    public void TryInterract() {
+        RaycastHit hit;
+        Ray ray = Camera.main.ScreenPointToRay(new Vector3(Screen.width / 2, Screen.height / 2, 0));
+        if (Physics.Raycast(ray, out hit, 2000)) {           
+            if (hit.collider.GetComponentInParent<Interactable>() != null && Vector3.Distance(transform.position, hit.collider.transform.position) < 10) {
+                hit.collider.GetComponentInParent<Interactable>().playInteraction();
+            }
+        }
+
     }
 }

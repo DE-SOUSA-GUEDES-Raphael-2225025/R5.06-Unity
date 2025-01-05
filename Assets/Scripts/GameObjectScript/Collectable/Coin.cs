@@ -6,6 +6,7 @@ public class Coin : MonoBehaviour, Collectable
 {
     [SerializeField] private float rotateSpeed = 5f;
     [SerializeField] private GameManager gameManager;
+    [SerializeField] private AudioClip pickupSound;
  
     void Update()
     {
@@ -15,5 +16,6 @@ public class Coin : MonoBehaviour, Collectable
 
     public void Collect() {
         GameManager.instance.AddCoin(1);
+        AudioSource.PlayClipAtPoint(pickupSound, transform.position);
     }
 }

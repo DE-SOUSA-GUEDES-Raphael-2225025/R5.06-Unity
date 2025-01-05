@@ -32,6 +32,9 @@ public class PlayerWeapon : MonoBehaviour
     }
 
     private void LateUpdate() {
+
+        if (GameManager.instance.IsGameEnded()) return; 
+
         if (Input.GetKeyDown(KeyCode.Mouse0)) {
             Shoot();
             UpdateUI();
