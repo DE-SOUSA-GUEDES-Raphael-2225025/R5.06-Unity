@@ -71,7 +71,3 @@ crashlytics-build.properties
 /[Aa]ssets/[Ss]treamingAssets/aa.meta
 /[Aa]ssets/[Ss]treamingAssets/aa/*
 
-# Added for the project
-## Remember to change Path for some packages (ex CC importer)
-/Packages/manifest.json 
-/Packages/packages-lock.json
